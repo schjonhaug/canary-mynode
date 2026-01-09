@@ -1,0 +1,20 @@
+[Unit]
+Description=Canary Frontend
+Wants=canary.service
+After=canary.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker stop canary-frontend 2>/dev/null
+ExecStartPre=-/usr/bin/docker rm canary-frontend 2>/dev/null
+ExecStart=/usr/bin/docker run --rm --name canary-frontend \
+    --network host \
+    -e API_URL=http://127.0.0.1:3001 \
+    -e PORT=3005 \
+    schjonhaug/canary-frontend:v1.3.0
+ExecStop=/usr/bin/docker stop canary-frontend
+Type=simple
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

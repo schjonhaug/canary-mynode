@@ -1,24 +1,14 @@
 [Unit]
-Description=Canary Backend
+Description=Canary
 Wants=electrs.service docker.service
 After=electrs.service docker.service
 
 [Service]
-ExecStartPre=-/usr/bin/docker stop canary 2>/dev/null
-ExecStartPre=-/usr/bin/docker rm canary 2>/dev/null
-ExecStart=/usr/bin/docker run --rm --name canary \
-    --network host \
-    -v /mnt/hdd/mynode/canary:/app/data \
-    -e CANARY_DATA_DIR=/app/data \
-    -e CANARY_ELECTRUM_URL=ssl://127.0.0.1:50002 \
-    -e CANARY_NETWORK=mainnet \
-    -e CANARY_MODE=self-hosted \
-    -e CANARY_BIND_ADDRESS=0.0.0.0:3010 \
-    schjonhaug/canary-backend:v1.3.0
-ExecStop=/usr/bin/docker stop canary
-Type=simple
-Restart=always
-RestartSec=60
+ExecStart=/opt/mynode/custom_apps/canary/scripts/start_canary.sh
+ExecStop=/usr/bin/docker stop canary canary-frontend
+ExecStopPost=-/usr/bin/docker rm canary canary-frontend
+Type=oneshot
+RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target

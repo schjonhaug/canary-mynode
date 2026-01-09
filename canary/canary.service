@@ -9,11 +9,11 @@ ExecStartPre=-/usr/bin/docker rm canary 2>/dev/null
 ExecStart=/usr/bin/docker run --rm --name canary \
     --network host \
     -v /mnt/hdd/mynode/canary:/app/data \
-    -e DATABASE_DIR=/app/data \
-    -e ELECTRUM_URL=ssl://127.0.0.1:50002 \
-    -e NETWORK=mainnet \
-    -e SINGLE_USER_MODE=true \
-    -e BIND_ADDRESS=0.0.0.0:3001 \
+    -e CANARY_DATABASE_DIR=/app/data \
+    -e CANARY_ELECTRUM_URL=ssl://127.0.0.1:50002 \
+    -e CANARY_NETWORK=mainnet \
+    -e CANARY_MODE=self-hosted \
+    -e CANARY_BIND_ADDRESS=0.0.0.0:3001 \
     schjonhaug/canary-backend:v1.3.0
 ExecStop=/usr/bin/docker stop canary
 Type=simple

@@ -4,7 +4,7 @@ Wants=electrs.service docker.service
 After=electrs.service docker.service
 
 [Service]
-ExecStart=/opt/mynode/custom_apps/canary/scripts/start_canary.sh
+ExecStart=/opt/mynode/canary/start_canary.sh
 ExecStop=/usr/bin/docker stop canary canary-frontend
 ExecStopPost=-/usr/bin/docker rm canary canary-frontend
 Type=oneshot

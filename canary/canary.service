@@ -9,7 +9,7 @@ ExecStartPre=-/usr/bin/docker rm canary 2>/dev/null
 ExecStart=/usr/bin/docker run --rm --name canary \
     --network host \
     -v /mnt/hdd/mynode/canary:/app/data \
-    -e CANARY_DATABASE_DIR=/app/data \
+    -e CANARY_DATA_DIR=/app/data \
     -e CANARY_ELECTRUM_URL=ssl://127.0.0.1:50002 \
     -e CANARY_NETWORK=mainnet \
     -e CANARY_MODE=self-hosted \

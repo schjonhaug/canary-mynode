@@ -1,4 +1,13 @@
 #!/bin/bash
+echo "Stopping Canary services..."
+systemctl stop canary-frontend 2>/dev/null || true
+systemctl stop canary 2>/dev/null || true
+
+echo "Disabling frontend service..."
+systemctl disable canary-frontend 2>/dev/null || true
+rm -f /etc/systemd/system/canary-frontend.service
+systemctl daemon-reload
+
 echo "Stopping Canary containers..."
 docker stop canary canary-frontend 2>/dev/null || true
 docker rm canary canary-frontend 2>/dev/null || true
